@@ -1,0 +1,50 @@
+# Screen 1: Workflow type
+scan_loader: clarius_rf
+
+# Screen 2: Scan inputs
+scan_path: PLACEHOLDER
+phantom_path: PLACEHOLDER
+scan_loader_kwargs:
+
+# Screen 3: Segmentation (either drawing or saved)
+seg_path: PLACEHOLDER
+seg_loader: pkl_roi
+seg_loader_kwargs:
+  assert_scan: False
+  assert_phantom: False
+
+# Screen 4: Analysis Type / Customization
+analysis_type: paramap
+analysis_kwargs:
+analysis_funcs:                             # Empty list means all functions
+  - lizzi_feleppa
+  - nakagami_params
+  - hkd_params
+
+# Screen 5: Analysis Configuration (either from GUI or saved)
+config_path:
+config_loader: custom
+config_kwargs:
+  transducer_freq_band: [0, 6000000] # Frequency band of the transducer in Hz
+  analysis_freq_band: [2000000, 5000000] # Frequency band for analysis in Hz
+  center_frequency: 3500000 # Center frequency of the transducer in Hz
+  sampling_frequency: 20000000 # Sampling frequency of the scan in Hz
+  ax_win_size: 100.0 # Axial window size in mm
+  lat_win_size: 5.0 # Lateral window size in mm
+  axial_overlap: 0.5 # Axial window overlap in percent
+  lateral_overlap: 0.5 # Lateral window overlap in percent
+  window_thresh: 0.95 # Percentage of window area required to be considered in ROI
+
+# Screen 6: Visualization Type / Customization
+visualization_type: paramap
+visualization_kwargs:
+  paramap_folder_path: PLACEHOLDER
+visualization_funcs:                        # Empty list means no additional functions
+  - paramaps
+  - plot_ps_window_data
+
+# Screen 7: Data Export Type / Customization
+data_export_type: csv
+data_export_path: test.csv
+data_export_funcs:                          # Empty list means no functions
+  - descr_vals
