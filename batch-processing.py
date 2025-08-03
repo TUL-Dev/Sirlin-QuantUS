@@ -76,8 +76,26 @@ def analyze_dataset(yaml_path: str, dataset_path: str) -> int:
 
                                     if exit_code := main_dict(config_dict):
                                         return exit_code
-    
+
+    combine_numerical_results(results_dir)
     return 0
+
+def combine_numerical_results(results_dir: Path) -> None:
+    """Combines numerical results from all processed scans into a single CSV file.
+    
+    Args:
+        results_dir (Path): Path to the directory containing the results of the analysis.
+    """
+    all_results = []
+    for result_file in results_dir.glob('**/*.csv'):
+        if result_file.name == 'combined_results.csv':
+            raise ValueError("Cannot combine results with the same name as the output file. Either delete or rename 'combined_results.csv' before running this function.")
+        df = pd.read_csv(result_file)
+        
+        all_results.append(df)
+
+    combined_df = pd.concat(all_results, ignore_index=True)
+    combined_df.to_csv(results_dir / 'combined_results.csv', index=False)
 
 if __name__ == "__main__":
     import argparse
