@@ -249,7 +249,7 @@ def nakagami_params(scan_rf_window: np.ndarray, phantom_rf_window: np.ndarray,
         rf_data (np.ndarray): RF data of the ROI (n lines x m samples).
         
     Returns:
-        Tuple: Nakagami parameters (w, u) for the ROI.
+        Tuple: Nakagami parameters (w, u) for the ROI. w is the scale parameter and u is the shape parameter.
     """
     r = np.abs(hilbert(scan_rf_window, axis=1))
     w = np.nanmean(r ** 2, axis=1)
@@ -264,7 +264,7 @@ def nakagami_params(scan_rf_window: np.ndarray, phantom_rf_window: np.ndarray,
     window.results.nak_u = u
 
 @output_vars("hkd_kappa", "hkd_alpha")
-def hkd_params(scan_rf_window: np.ndarray, phantom_rf_window: np.ndarray, 
+def hkd_rsk(scan_rf_window: np.ndarray, phantom_rf_window: np.ndarray, 
             window: Window, config: RfAnalysisConfig, 
             image_data: UltrasoundRfImage, **kwargs) -> None:
     """Compute HKD parameters for the ROI.
@@ -279,6 +279,26 @@ def hkd_params(scan_rf_window: np.ndarray, phantom_rf_window: np.ndarray,
     from .hkd import RSK_HKD_Estimator
     rsk_estimator = RSK_HKD_Estimator()
     kappa, alpha = rsk_estimator.estimate_parameters(scan_rf_window)
+
+    window.results.hkd_kappa = kappa
+    window.results.hkd_alpha = alpha
+
+@output_vars("hkd_kappa", "hkd_alpha")
+def hkd_xu(scan_rf_window: np.ndarray, phantom_rf_window: np.ndarray, 
+            window: Window, config: RfAnalysisConfig, 
+            image_data: UltrasoundRfImage, **kwargs) -> None:
+    """Compute HKD parameters for the ROI.
+
+    Source: Destrempes F. et al. ESTIMATION METHOD OF THE HOMODYNED K-DISTRIBUTION BASED ON THE MEAN INTENSITY AND TWO LOG-MOMENTS
+    Args:
+        rf_data (np.ndarray): RF data of the ROI (n lines x m samples).
+
+    Returns:
+        Tuple: HKD parameters (kappa, alpha) for the ROI.
+    """
+    from .hkd import XU_HKD_Estimator
+    xu_estimator = XU_HKD_Estimator()
+    kappa, alpha = xu_estimator.compute_hkd_params(scan_rf_window)
 
     window.results.hkd_kappa = kappa
     window.results.hkd_alpha = alpha

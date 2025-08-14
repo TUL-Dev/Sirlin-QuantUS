@@ -19,7 +19,9 @@ analysis_kwargs:
 analysis_funcs:                             # Empty list means all functions
   - lizzi_feleppa
   - nakagami_params
-  - hkd_params
+  - hkd_xu
+  # - attenuation_coef
+  # - bsc
 
 # Screen 5: Analysis Configuration (either from GUI or saved)
 config_path:

@@ -1388,20 +1388,20 @@ def clariusRfParserWrapper(img_folder: str, ref_folder: str, visualize: bool = F
     ref_info_files = list(ref_folder.glob("*rf.yml"))
     
     # Check if we found required files
-    assert len(img_raw_files) == 1, f"No rf.raw files found in {img_folder}"
-    assert len(img_tgc_files) == 1, f"No env.tgc.yml files found in {img_folder}"
-    assert len(img_info_files) == 1, f"No rf.yml files found in {img_folder}"
-    assert len(ref_raw_files) == 1, f"No rf.raw files found in {ref_folder}"
-    assert len(ref_tgc_files) == 1, f"No env.tgc.yml files found in {ref_folder}"
-    assert len(ref_info_files) == 1, f"No rf.yml files found in {ref_folder}"
+    assert len(img_raw_files) == 1, f"Exactly 1 rf.raw file must be in {img_folder}, found {len(img_raw_files)}"
+    assert len(img_info_files) == 1, f"Exactly 1 rf.yml file must be in {img_folder}, found {len(img_info_files)}"
+    assert len(ref_raw_files) == 1, f"Exactly 1 rf.raw file must be in {ref_folder}, found {len(ref_raw_files)}"
+    assert len(ref_info_files) == 1, f"Exactly 1 rf.yml file must be in {ref_folder}, found {len(ref_info_files)}"
     
     # Get paths
     img_raw = str(img_raw_files[0])
-    img_tgc = str(img_tgc_files[0]) 
     img_info = str(img_info_files[0])
     ref_raw = str(ref_raw_files[0])
-    ref_tgc = str(ref_tgc_files[0])
     ref_info = str(ref_info_files[0])
+    if not len(img_tgc_files):
+        img_tgc = None
+    if not len(ref_tgc_files):
+        ref_tgc = None
     
     # Use the existing clariusRfParser function from clarius.py
     return clariusRfParser(
