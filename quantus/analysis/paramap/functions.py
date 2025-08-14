@@ -251,7 +251,7 @@ def nakagami_params(scan_rf_window: np.ndarray, phantom_rf_window: np.ndarray,
     Returns:
         Tuple: Nakagami parameters (w, u) for the ROI. w is the scale parameter and u is the shape parameter.
     """
-    r = np.abs(hilbert(scan_rf_window, axis=1))
+    r = np.abs(hilbert(scan_rf_window, axis=0))
     w = np.nanmean(r ** 2, axis=1)
     u = (w ** 2) / np.var(r ** 2, axis=1)
 
