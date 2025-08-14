@@ -1400,8 +1400,14 @@ def clariusRfParserWrapper(img_folder: str, ref_folder: str, visualize: bool = F
     ref_info = str(ref_info_files[0])
     if not len(img_tgc_files):
         img_tgc = None
+    else:
+        assert len(img_tgc_files) == 1, f"Exactly 1 env.tgc.yml file must be in {img_folder}, found {len(img_tgc_files)}"
+        img_tgc = str(img_tgc_files[0])
     if not len(ref_tgc_files):
         ref_tgc = None
+    else:
+        assert len(ref_tgc_files) == 1, f"Exactly 1 env.tgc.yml file must be in {ref_folder}, found {len(ref_tgc_files)}"
+        ref_tgc = str(ref_tgc_files[0])
     
     # Use the existing clariusRfParser function from clarius.py
     return clariusRfParser(
