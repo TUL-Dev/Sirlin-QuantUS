@@ -238,7 +238,7 @@ class RSK_HKD_Estimator:
         hk = self.k_vals[l]
         Mu = self.Mu_vals[m]
         alpha = Mu       
-        kappa = np.sqrt(2*hk)
+        kappa = 0.5 * hk**2
         return kappa, alpha
     
 class XU_HKD_Estimator:
@@ -418,5 +418,5 @@ class XU_HKD_Estimator:
         epsilon = np.sqrt(MEAN * computed_gamma / (computed_gamma + alpha)) # Eq.7  Cristea et al. 2020
         sigma = np.sqrt(MEAN / (2 * (computed_gamma + alpha))) # Eq.8 Cristea et al. 2020
         hk = epsilon / (sigma * np.sqrt(alpha)) # Eq.13 Cristea et al. 2020
-        kappa = np.sqrt(2*hk)
+        kappa = 0.5 * hk**2
         return kappa, alpha
