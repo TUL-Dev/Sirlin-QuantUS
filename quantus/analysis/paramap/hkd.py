@@ -175,7 +175,7 @@ class RSK_HKD_Estimator:
         return k   
     def estimate_parameters(self, rf_data):
         env = np.abs(hilbert(rf_data, axis=1)).flatten()
-        env = env.flatten()
+        # env = env.flatten()
         stats = self.compute_all_statistics(env)
         (l, m), err = self.find_best_match(stats)
 
@@ -391,8 +391,8 @@ class XU_HKD_Estimator:
             return gama, alpha
 
         # --- Envelope detection and moment statistics ---
-        #env = np.abs(hilbert(rfData, axis=1))
-        env = rfData
+        env = np.abs(hilbert(rfData, axis=1))
+        # env = rfData
         data = env.flatten()
         I = data ** 2
         I = I.astype(float)

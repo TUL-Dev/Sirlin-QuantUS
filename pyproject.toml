@@ -76,11 +76,6 @@ dependencies = [
 quantus = "quantus.full_workflow:main_yaml"
 quantus_cli = "quantus.cli:main_cli"
 
-[tool.setuptools]
-ext-modules = [
-  {name = "philipsRfParser", sources = ["quantus/image_loading/utc_loaders/philips_rf_sc_3d/philips_rf_parser.c"]},
-]
-
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["quantus*"]
